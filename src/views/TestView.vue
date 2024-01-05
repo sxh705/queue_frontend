@@ -7,49 +7,42 @@
         <el-button @click="axios_get">axios_get</el-button>
     </div>
     <div>
+        <el-switch v-model="global.log"></el-switch>
+    </div>
+    <div>
         {{ msg }}
     </div>
     <div>
+        <!--显示全局变量状态-->
+        global
         {{ global }}
-    </div>
-    <div>
-        {{ check_data }}
     </div>
 </template>
 
 <script setup>
+// define
+import { ref } from 'vue'
+import { axios } from '@/util/myAxios'
+import { global } from '@/util/global'
 
-import { ref, onMounted } from 'vue'
-import axios from '@/util/request'
-import global from '@/util/global'
+let msg = ref("hello world!"); //测试信息显示
 
+// function
+/**
+ * 测试点击事件
+ */
 let btn = () => {
     console.log(111);
 };
 
+/**
+ * 测试axios请求
+ */
 let axios_get = () => {
     axios.post('test/time')
         .then(res => {
             console.log(res.data);
         })
 };
-
-let check_data = ref(0);
-
-let axios_check = () => {
-    axios.get('user/check')
-        .then(res => {
-            if (!!res.data.result) {
-                check_data.value = res.data.result[0];
-                global.user = ref(res.data.result[1]);
-            }
-        })
-}
-
-onMounted(() => {
-    axios_check();
-})
-
-let msg = ref("hello world!");
 
 </script>

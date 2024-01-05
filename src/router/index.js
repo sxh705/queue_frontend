@@ -24,6 +24,10 @@ const router = createRouter({
       path: "/login/find",
       component: () => import("@/views/login/FindView.vue")
     },
+    {
+      path: "/kv",
+      component: () => import("@/views/Kv.vue")
+    },
   ]
 })
 

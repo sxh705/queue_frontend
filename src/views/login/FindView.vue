@@ -20,34 +20,37 @@
 
 <script setup>
 
+// define
 import { ref, reactive } from 'vue'
-import axios from '@/util/request'
-import global from '@/util/global'
+import { axios } from '@/util/myAxios'
+import { global } from '@/util/global' //全局信息
 
-let find = ref(false);
+let find = ref(false); // 是否显示找回的密码
+let code = ref(""); // 验证码的model
 
-let code = ref("");
-
+// methods
+/**
+ * 发送验证码
+ */
 const find_code = () => {
     axios.post(`user/find/code`, {
         "telephone": global.user.telephone,
     })
-        .then(res => {
-        })
 }
 
+/**
+ * 通过手机号和验证码找回密码
+ */
 const find_tele = () => {
     axios.post(`user/find/find`, {
         telephone: global.user.telephone,
         code: code.value,
     })
         .then(res => {
-            console.log("resdata", res.data);
             let user1 = res.data.result;
             global.user.password = user1.password;
             global.user.name = user1.name;
             find.value = true;
         })
 }
-
 </script>
